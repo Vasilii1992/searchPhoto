@@ -10,6 +10,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     private var photos = [UnsplashPhoto]()
     
+    private var selectedImages = [UIImage]()
+    
     private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
@@ -22,9 +24,14 @@ class PhotosCollectionViewController: UICollectionViewController {
         return UIBarButtonItem(barButtonSystemItem: .action, target: self,
                                action: #selector(actionBarButtonTapped))
     }()
+    
+    private var numberOfSelectedPhotos: Int {
+        return collectionView.indexPathsForSelectedItems?.count ?? 0
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateNavButtonsState()
         setupCollectionView()
         setupNavigationBar()
         setupSearchBar()
@@ -32,14 +39,37 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView.backgroundColor = .white
         
     }
+    
+    private func updateNavButtonsState() {
+        addBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
+        actionBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
+        
+    }
+    
+    func refresh() {
+        self.selectedImages.removeAll()
+        self.collectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+        updateNavButtonsState()
+    }
+    
+    
     // MARK: - NavigationItems Action
     @objc func addBarButtonTapped() {
         print(#function)
     }
     
-    @objc func actionBarButtonTapped() {
+    @objc func actionBarButtonTapped(sender: UIBarButtonItem) {
         print(#function)
+        let shareController = UIActivityViewController(activityItems: selectedImages, applicationActivities: nil)
 
+        shareController.completionWithItemsHandler = {[weak self] _,bool,_,_ in
+            if bool {
+                self?.refresh()
+            }
+        }
+        shareController.popoverPresentationController?.barButtonItem = sender
+        shareController.popoverPresentationController?.permittedArrowDirections = .any
+        present(shareController, animated: true)
     }
     
     
@@ -50,6 +80,8 @@ class PhotosCollectionViewController: UICollectionViewController {
         
         collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.contentInsetAdjustmentBehavior = .automatic
+        // чтобы можно было выбирать несколько ячеек
+        collectionView.allowsMultipleSelection = true
 
     }
     
@@ -91,6 +123,22 @@ class PhotosCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        updateNavButtonsState()
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
+        guard let image = cell.photoImageView.image else { return }
+            selectedImages.append(image)
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        updateNavButtonsState()
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
+        guard let image = cell.photoImageView.image else { return }
+        if let index = selectedImages.firstIndex(of: image) {
+            selectedImages.remove(at: index)
+        }
+    }
 }
 // MARK: - UISearchBarDelegate
 
@@ -105,6 +153,7 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
                 self?.photos = fetchedPhotos.results
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
+                    self?.refresh()
                 }
                 
             }
