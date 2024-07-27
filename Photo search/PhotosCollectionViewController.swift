@@ -8,6 +8,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     private var timer: Timer?
     
+    private var photos = [UnsplashPhoto]()
+    
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self,
                                action: #selector(addBarButtonTapped))
@@ -40,8 +42,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     // MARK: - Setup UI Elements
     private func setupCollectionView() {
-        collectionView.register(UICollectionViewCell.self,
-                                forCellWithReuseIdentifier: "cell")
+        collectionView.register(PhotosCell.self,
+                                forCellWithReuseIdentifier: PhotosCell.reuseId)
 
     }
     
@@ -72,12 +74,14 @@ class PhotosCollectionViewController: UICollectionViewController {
     // MARK: - UICollectionViewDataSourse, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return photos.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCell.reuseId, for: indexPath) as! PhotosCell
+        let unsplashPhoto = photos[indexPath.item]
+        cell.unsplashPhoto = unsplashPhoto
+
         return cell
     }
     
@@ -91,12 +95,13 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
         
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
             self?.networkDataFetcher.fetchImages(searchTerm: searchText) { searchResults in
-
+                guard let fetchedPhotos = searchResults else { return }
+                self?.photos = fetchedPhotos.results
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
                 
             }
         })
-        
-        
-
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Василий Тихонов on 27.07.2024.
 //
 
+import SDWebImage
 import UIKit
 
 class PhotosCell: UICollectionViewCell {
@@ -27,6 +28,15 @@ class PhotosCell: UICollectionViewCell {
         image.contentMode = .scaleAspectFill
         return image
     }()
+    
+    
+    var unsplashPhoto: UnsplashPhoto! {
+        didSet {
+            let photoUrl = unsplashPhoto.urls["regular"]
+            guard let imageUrl = photoUrl, let url = URL(string: imageUrl) else { return }
+            photoImageView.sd_setImage(with: url)
+        }
+    }
     
     // когда на ячейку нажимаем
     override var isSelected: Bool {
@@ -56,6 +66,9 @@ class PhotosCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    
+    
     
     private func setupPhotoImageView() {
         contentView.addSubview(photoImageView)
