@@ -85,6 +85,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     
             likesVC.photos.append(contentsOf: selectedPhotos ?? [])
             likesVC.collectionView.reloadData()
+            likesVC.savePhotos()
             
             self.refresh()
         }

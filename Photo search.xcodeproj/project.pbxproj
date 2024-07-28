@@ -20,6 +20,7 @@
 		6B0BBA392C5531AC00160703 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B0BBA382C5531AC00160703 /* SDWebImageMapKit */; };
 		6B1661802C565BE80079870D /* LikesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B16617F2C565BE80079870D /* LikesCollectionViewController.swift */; };
 		6B1661822C565D110079870D /* LikesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1661812C565D110079870D /* LikesCollectionViewCell.swift */; };
+		6B16618A2C5677730079870D /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1661892C5677730079870D /* ImageSaver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		6B0BBA332C552A8900160703 /* PhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		6B16617F2C565BE80079870D /* LikesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesCollectionViewController.swift; sourceTree = "<group>"; };
 		6B1661812C565D110079870D /* LikesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesCollectionViewCell.swift; sourceTree = "<group>"; };
+		6B1661892C5677730079870D /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				6B0BBA302C551C3500160703 /* SearchResults.swift */,
+				6B1661892C5677730079870D /* ImageSaver.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				6B0BBA242C53E76900160703 /* MainTabBarController.swift in Sources */,
 				6B0BBA292C53E8D700160703 /* PhotosCollectionViewController.swift in Sources */,
 				6B0BBA2B2C550DC500160703 /* NetworkService.swift in Sources */,
+				6B16618A2C5677730079870D /* ImageSaver.swift in Sources */,
 				6B0BBA312C551C3500160703 /* SearchResults.swift in Sources */,
 				6B0BBA122C53E6B100160703 /* SceneDelegate.swift in Sources */,
 				6B0BBA342C552A8900160703 /* PhotosCell.swift in Sources */,

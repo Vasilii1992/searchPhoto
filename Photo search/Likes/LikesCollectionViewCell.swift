@@ -37,7 +37,7 @@ class LikesCollectionViewCell: UICollectionViewCell {
             myImageView.sd_setImage(with: url)
         }
     }
-    // когда на ячейку нажимаем
+    
     override var isSelected: Bool {
         didSet {
             updateSelectedState()
