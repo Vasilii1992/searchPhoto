@@ -10,6 +10,12 @@ import UIKit
 class LikesCollectionViewController: UICollectionViewController {
     
     var photos = [UnsplashPhoto]()
+    private var selectedImages = [UIImage]()
+
+    
+    private var numberOfSelectedPhotos: Int {
+        return collectionView.indexPathsForSelectedItems?.count ?? 0
+    }
     
     private lazy var trashBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: nil)
@@ -26,18 +32,35 @@ class LikesCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.backgroundColor = .white
-        collectionView.register(LikesCollectionViewCell.self, forCellWithReuseIdentifier: LikesCollectionViewCell.reuseId)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.minimumInteritemSpacing = 1
-        layout.minimumLineSpacing = 1
-        
+
+        setupCollectionView()
         setupEnterLabel()
         setupNavigationBar()
         
+    }
+    
+    private func setupCollectionView() {
+        collectionView.backgroundColor = .white
+        collectionView.register(LikesCollectionViewCell.self,
+                                forCellWithReuseIdentifier: LikesCollectionViewCell.reuseId)
+
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.contentInsetAdjustmentBehavior = .automatic
+        collectionView.allowsMultipleSelection = true
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
+    }
+    
+    private func updateNavButtonsState() {
+        trashBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
+        
+    }
+    
+    func refresh() {
+        self.selectedImages.removeAll()
+        self.collectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+        updateNavButtonsState()
     }
     
     // MARK: - Setup UI Elements
@@ -71,6 +94,24 @@ class LikesCollectionViewController: UICollectionViewController {
         cell.unsplashPhoto = unsplashPhoto
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        updateNavButtonsState()
+        let cell = collectionView.cellForItem(at: indexPath) as! LikesCollectionViewCell
+        guard let image = cell.myImageView.image else { return }
+            selectedImages.append(image)
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        updateNavButtonsState()
+        let cell = collectionView.cellForItem(at: indexPath) as! LikesCollectionViewCell
+        guard let image = cell.myImageView.image else { return }
+        if let index = selectedImages.firstIndex(of: image) {
+            selectedImages.remove(at: index)
+        }
+    }
+
 }
 
     // MARK: - UICollectionViewDelegateFlowLayout
