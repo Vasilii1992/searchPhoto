@@ -66,10 +66,7 @@ class PhotosCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    
-    
-    
+
     private func setupPhotoImageView() {
         contentView.addSubview(photoImageView)
         photoImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -83,6 +80,5 @@ class PhotosCell: UICollectionViewCell {
         contentView.addSubview(checkmark)
         checkmark.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: -8).isActive = true
         checkmark.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: -8).isActive = true
-    }
-    
+    }    
 }

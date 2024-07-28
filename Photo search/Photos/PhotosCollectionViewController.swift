@@ -52,7 +52,6 @@ class PhotosCollectionViewController: UICollectionViewController {
         updateNavButtonsState()
     }
     
-    
     // MARK: - NavigationItems Action
     @objc func addBarButtonTapped() {
         print(#function)
@@ -71,7 +70,6 @@ class PhotosCollectionViewController: UICollectionViewController {
         shareController.popoverPresentationController?.permittedArrowDirections = .any
         present(shareController, animated: true)
     }
-    
     
     // MARK: - Setup UI Elements
     private func setupCollectionView() {
@@ -179,5 +177,4 @@ extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInserts.left
     }
-    
 }

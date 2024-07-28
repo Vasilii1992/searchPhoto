@@ -7,9 +7,7 @@
 
 import Foundation
 
-
 class NetworkService {
-    
     
     func request(searchTer: String, completion: @escaping (Data?, Error?) -> Void) {
         let parameters = prepareParameters(searchTerm: searchTer)
@@ -28,7 +26,6 @@ class NetworkService {
         return headers
     }
     
-    
     private func prepareParameters(searchTerm: String?) -> [String: String] {
         var parameters = [String: String]()
         parameters["query"] = searchTerm
@@ -45,7 +42,6 @@ class NetworkService {
         components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
         return components.url!
     }
-    
     
     private func createDataTask(from request: URLRequest, completion: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask {
         

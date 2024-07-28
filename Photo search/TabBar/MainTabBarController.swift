@@ -14,17 +14,17 @@ class MainTabBarController: UITabBarController {
         view.backgroundColor = .gray
        
        let photoVC = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+       let likeVC = LikesCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
 
         viewControllers = [
             generateNavigationController(rootViewController: photoVC,
                                                             title: "Photos",
                                                             imageSystemName: "photo.on.rectangle"),
-            generateNavigationController(rootViewController: ViewController(),
+            generateNavigationController(rootViewController: likeVC,
                                                             title: "Favourites",
                                                             imageSystemName: "heart.fill"),
         
         ]
-        
     }
     
     private func generateNavigationController(rootViewController: UIViewController, title: String,imageSystemName: String ) -> UINavigationController {
