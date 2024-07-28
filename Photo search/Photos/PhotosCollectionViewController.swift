@@ -13,7 +13,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     private var selectedImages = [UIImage]()
     
     private let itemsPerRow: CGFloat = 2
-    private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    private let sectionInserts = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self,
