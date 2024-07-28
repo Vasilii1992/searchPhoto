@@ -9,6 +9,6 @@
 - Удаление картинки из избраного.
 
 ## Скриншоты
-<img src="https://github.com/Vasilii1992/skyCast/blob/main/Screenshots/photo.png" width="200" height="400"> <img src="https://github.com/Vasilii1992/skyCast/blob/main/Screenshots/favorite.png" width="200" height="400">
+<img src="https://github.com/Vasilii1992/searchPhoto/blob/main/Screenshots/photo.png" width="200" height="400"> <img src="https://github.com/Vasilii1992/searchPhoto/blob/main/Screenshots/favorite.png" width="200" height="400">
 
 
